@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보 수정</title>
+</head>
+<body><header class="header">
+    <span">아무 말 대잔치</span>
+    <img src="../images/profile.png" alt="사용자 프로필" class="profile-img" />
+  </header>
+
+    <link rel="stylesheet" href="profile.css">
+    <div class="main">
+        <h2 class="text">회원정보 수정</h2>
+
+        <div class="picture">
+            <label for="picture-upload">프로필 사진*</label>
+            <p class="helper-text" id="picture-error"></p>
+            <div class="profile-container">
+                <input type="file" id="picture-upload" accept="image/*" hidden />
+                <div class="profile-circle" id="profile-preview" onclick="document.getElementById('picture-upload').click()">
+                    <span>변경</span>
+                </div>
+            </div>
+        </div> 
+
+        <div class="email-check">
+            <label for="email">이메일</label>
+            <h4>startupcode@gmail.com</h4>
+        </div>
+
+        <div class="input-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" placeholder="스타트업코드"> 
+            <p class="helper-text" id="nickname-error"></p>
+        </div>
+
+        <button type="button" id="update-btn" disabled>수정하기</button>
+
+        <a href="login.html" class="quit">회원 탈퇴</a>
+
+        <button type="button" id="complete-btn" disabled>수정완료</button>
+
+        <script src="profile.js"></script>
+</body>
+</html>
