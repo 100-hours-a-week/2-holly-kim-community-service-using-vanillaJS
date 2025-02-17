@@ -121,3 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+// 뒤로가기 기능
+function goBack() {
+    window.location.href = "../login/login.html";
+}

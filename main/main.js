@@ -45,7 +45,7 @@ function createPost(title, stats, date, author, authorImgUrl) {
 
     // 카드 클릭 시 게시글 상세 페이지로 이동
     newPost.addEventListener("click", function () {
-        window.location.href = `../post detail/post detail.html?id=${currentPostId}`;
+        window.location.href = `../post-detail/post-detail.html?id=${currentPostId}`;
     });
 
     postList.appendChild(newPost); // 최신 게시글이 아래로 추가
@@ -86,3 +86,15 @@ function loadMorePosts() {
 
 // 초기 게시글 로드 실행
 loadInitialPosts();
+
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdown-menu");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click", function (event) {
+    const dropdown = document.getElementById("dropdown-menu");
+    if (!event.target.matches('.profile-img')) {
+        dropdown.style.display = "none";
+    }
+});
