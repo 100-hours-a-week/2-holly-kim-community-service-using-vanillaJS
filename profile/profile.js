@@ -80,5 +80,4 @@ function quit() {
     alert("회원 탈퇴가 완료되었습니다.");
     window.location.href = "../login/login.html";
 }
-
-//닉네임 추가
+ 

@@ -6,7 +6,7 @@
 }
 
 .header {
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     border-bottom: 1px solid gray;
     font-size: 32px;
     text-align: center;
@@ -24,7 +24,7 @@
 }
 
 body {
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     text-align: center;
 }
 
@@ -44,7 +44,7 @@ label {
 .custom-file {
     display: flex;
     align-items: center;
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     padding: 8px;
     border-radius: 3px;
     box-sizing: border-box;
@@ -71,7 +71,7 @@ input[type="file"] {
 }
 
 input{
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     width: 100%;
     padding: 8px;
     border: 1px solid gray;
@@ -85,7 +85,7 @@ input:hover {
 
 textarea{
     height: 300px;
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     width: 100%;
     padding: 8px;
     border: 1px solid gray;
