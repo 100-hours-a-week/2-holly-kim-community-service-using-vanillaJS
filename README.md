@@ -1,16 +1,20 @@
 # 3주차 과제 
-html, css, vanilla javascript로 커뮤니티 웹사이트 구현
+html, css, vanilla javascript로 커뮤니티 웹사이트 구현하기
 
 ### 실행방법
 VSCode에서 Go Live로 실행 ([http://localhost:5500](http://localhost:5500)으로 redirect됨.)  
 
 로그인 화면인 http://localhost:5500/login/login.html 화면에서 시작하면 된다.  
-로그인 사용자 mock data는 다음과 같고 이 계정정보 중 하나로 로그인하면 된다.  
+- 로그인 사용자 mock data는 다음과 같고 이 계정정보 중 하나로 로그인하면 된다.  
         { email: "test@example.com", password: "Test@1234" },  
         { email: "user@example.com", password: "User@5678" }
 
 
- 
+- 회원가입 시 아래는 이미 등록된 정보이므로 다른 정보를 입력해야 한다.  
+이메일 목록: ["test@example.com", "user@example.com"]  
+닉네임 목록: ["user123", "nickname1"]
+
+
 특정 화면을 보고 싶다면 다음과 같이 원하는 기능(x)을 url에 넣으면 된다.    
 http://localhost:5500/x/x.html  
 
@@ -44,3 +48,16 @@ http://localhost:5500/x/x.html
 
 
 현재는 mock data로 유효성 검증을 했다. 
+
+
+또한 현재 endpoint들이 동사로 되어 있는 경우들(edit-post, make post, pwChange, register)이 있는데 이는 추후에 바꿀 것이다.  
+| 기존 URL | RESTful한 URL |
+| --- | --- |
+| `/edit-post` | `PUT /posts/{post_id}` |
+| `/login` | `POST /auth/login` |
+| `/main` | `GET /posts` |
+| `/make-post` | `POST /posts` |
+| `/post-detail` | `GET /posts/{post_id}` |
+| `/profile` | `GET /users/{user_id}` |
+| `/pwChange` | `PUT /users/{user_id}/password` |
+| `/register` | `POST /auth/register` |
