@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (user) {
             alert("로그인 성공");
-            window.location.href = "../main/main.html";
+            window.location.href = "../../../pages/posts/list.html";
         } else {
             passwordError.textContent = "*아이디 또는 비밀번호를 확인해주세요.";
         }

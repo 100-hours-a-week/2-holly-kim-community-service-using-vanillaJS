@@ -132,12 +132,12 @@ document.addEventListener("click", function (event) {
 
 // 뒤로가기 기능
 function goBack() {
-    window.location.href = "../main/main.html";
+    window.location.href = "../../pages/posts/list.html";
 }
 
 // 게시글 수정 페이지로 이동
 function editPost() {
-    window.location.href = "../edit-post/edit-post.html";
+    window.location.href = "../../pages/posts/edit.html";
 }
 
 // 모달 열기
@@ -155,7 +155,7 @@ function closeModal() {
 // 게시글 삭제
 function deletePost() {
     alert("게시글이 삭제되었습니다.");
-    window.location.href = "../main/main.html";
+    window.location.href = "../../pages/posts/list.html";
 }
 
 // 조회수 및 댓글 수 포맷팅

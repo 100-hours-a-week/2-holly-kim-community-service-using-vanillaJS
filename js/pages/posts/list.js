@@ -1,3 +1,26 @@
+// import { apiRequest } from "../../api/request.js";
+// import { ENDPOINTS } from "../../api/endpoints.js";
+
+// async function fetchPosts() {
+//   try {
+//     const posts = await apiRequest(ENDPOINTS.POSTS.LIST);
+//     renderPosts(posts);
+//   } catch (error) {
+//     console.error("게시글 목록을 불러오는 중 오류 발생:", error);
+//   }
+// }
+
+// function renderPosts(posts) {
+//   const postContainer = document.getElementById("post-list");
+//   postContainer.innerHTML = posts
+//     .map((post) => `<div class="post-item">${post.title}</div>`)
+//     .join("");
+// }
+
+// document.addEventListener("DOMContentLoaded", fetchPosts);
+
+
+
 let postCount=0;
 const postList = document.getElementById("post-list"); 
 
@@ -23,7 +46,7 @@ function formatNumber(num) {
 
 // 게시글 작성 버튼 클릭 시 post.html로 이동
 document.getElementById("create-btn").addEventListener("click", function () {
-    window.location.href = "../make post/make post.html";
+    window.location.href = "../../pages/posts/create.html";
 });
 
 // 게시글 생성 함수 (최신 게시글이 아래로 추가)
@@ -45,7 +68,7 @@ function createPost(title, stats, date, author, authorImgUrl) {
 
     // 카드 클릭 시 게시글 상세 페이지로 이동
     newPost.addEventListener("click", function () {
-        window.location.href = `../post-detail/post-detail.html?id=${currentPostId}`;
+        window.location.href = `../../pages/posts/detail.html?id=${currentPostId}`;
     });
 
     postList.appendChild(newPost); // 최신 게시글이 아래로 추가

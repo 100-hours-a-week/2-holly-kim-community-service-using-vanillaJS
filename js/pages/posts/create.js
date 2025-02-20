@@ -1,3 +1,11 @@
+import { apiRequest } from "../api/request.js";
+import { ENDPOINTS } from "../api/endpoints.js";
+
+async function createPost(postData) {
+  return apiRequest(ENDPOINTS.POSTS.CREATE, "POST", postData);
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const titleInput = document.getElementById("title");
     const contentInput = document.getElementById("content");
