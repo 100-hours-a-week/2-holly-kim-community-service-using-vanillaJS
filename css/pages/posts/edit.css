@@ -9,13 +9,13 @@
 }
 
 body {
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     font-family: Arial, sans-serif;
     text-align: center;
 }
 
 .header {
-    background-color: #eaeaea;
+    background-color: #F4F5F7;
     border-bottom: 1px solid gray;
     font-size: 32px;
     text-align: center;
@@ -88,7 +88,7 @@ label {
 }
 
 input {
-    background-color: #e9e9e9;
+    background-color: #F4F5F7;
     width: 100%;
     padding: 8px;
     border: none;
@@ -98,7 +98,7 @@ input {
  
 
 .content {
-    background-color: #e9e9e9;
+    background-color: #F4F5F7;
     width: 100%;
     height: 300px;
     padding: 10px;

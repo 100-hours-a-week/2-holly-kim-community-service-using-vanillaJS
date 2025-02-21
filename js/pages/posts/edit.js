@@ -1,25 +1,24 @@
-const updateBtn = document.getElementById("update-btn");
+import { renderHeader } from "/js/components/header.mjs";
 
-function toggleDropdown() {
-    const dropdown = document.getElementById("dropdown-menu");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
+document.addEventListener("DOMContentLoaded", () => {
+    renderHeader(); // 공통 헤더 삽입
 
-document.addEventListener("click", function (event) {
-    const dropdown = document.getElementById("dropdown-menu");
-    if (!event.target.matches('.profile-img')) {
-        dropdown.style.display = "none";
+    const updateBtn = document.getElementById("update-btn");
+
+    if (updateBtn) {
+        updateBtn.addEventListener("click", () => {
+            alert("게시글 수정 완료");
+            window.location.href = "/pages/posts/detail.html";
+        });
     }
+
+    document.addEventListener("click", (event) => {
+        const dropdown = document.getElementById("dropdown-menu");
+
+        if (event.target.matches(".profile-img")) {
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        } else if (dropdown) {
+            dropdown.style.display = "none";
+        }
+    });
 });
-
-// 뒤로가기 기능
-function goBack() {
-    window.location.href = "../main/main.html";
-}
-
-updateBtn.addEventListener("click", function () { 
-        alert("게시글 수정 완료");
-        window.location.href = "../post-detail/post-detail.html";
-    
-});
-

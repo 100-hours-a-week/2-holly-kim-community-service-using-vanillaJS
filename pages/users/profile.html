@@ -6,19 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원정보 수정</title>
     <link rel="stylesheet" href="../../css/pages/users/profile.css" />
+    <script src="../../js/pages/users/profile.js"></script>
 </head>
 
 <body>
     <header class="header">
         <span class="homepage">아무 말 대잔치</span>
         <div class="profile-container">
-            <img src="../images/profile.png" alt="사용자 프로필" class="profile-img" onclick="toggleDropdown()" />
-            <ul class="dropdown-menu" id="dropdown-menu">
+            <img src="/assets/images/profile.png" alt="사용자 프로필" class="profile-img" onclick="toggleDropdown()" />
+            <ul class="dropdown-menu" id="dropdown-menu">  
                 <li><a href="profile.html" class="edit-profile">회원정보수정</a></li>
-                <li>
-                    <a href="../pwChange/pwChange.html" class="edit-pw">비밀번호 수정</a>
-                </li>
-                <li><a href="../login/login.html" class="logout">로그아웃</a></li>
+                <li><a href="password.html" class="edit-pw">비밀번호 수정</a></li>
+                <li><a href="../auth/login.html" class="logout">로그아웃</a></li>
             </ul>
         </div>
     </header>
@@ -31,7 +30,7 @@
                 <label for="picture-upload">프로필 사진*</label>
                 <div class="profile-circle" id="profile-preview"
                     onclick="document.getElementById('picture-upload').click()">
-                    <img src="../images/profile.png" alt="프로필 사진" />
+                    <img src="/assets/images/profile.png" alt="프로필 사진" />
 
                     <div class="profile-overlay">변경</div>
                 </div>
@@ -68,12 +67,11 @@
             <div class="modal-buttons">
             </br>
                 <button onclick="closeModal()" class="reject-btn">취소</button>
-                <button onclick="quit()" class="conform-btn">확인</button>
+                <button onclick="quit()" class="confirm-btn">확인</button>
             </div>
         </div>
     </div>
 
-    <script src="../../js/pages/users/profile.js"></script>
 </body>
 
 </html>

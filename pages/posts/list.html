@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>게시판</title>
     <link rel="stylesheet" href="../../css/pages/posts/list.css" />
+    <script src="/js/pages/posts/list.js"></script>
   </head>
   <body>
     <header class="header"> 
@@ -12,9 +13,9 @@
       <div class="profile-container">
           <img src="../../assets/images/profile.png" alt="사용자 프로필" class="profile-img" onclick="toggleDropdown()" />
           <ul class="dropdown-menu" id="dropdown-menu">
-              <li><a href="../profile/profile.html" class="edit-profile">회원정보수정</a></li>
-              <li><a href="../pwChange/pwChange.html" class="edit-pw">비밀번호 수정</a></li>
-              <li><a href="../login/login.html" class="logout">로그아웃</a></li>
+            <li><a href="../users/profile.html" class="edit-profile">회원정보수정</a></li>
+            <li><a href="../users/password.html" class="edit-pw">비밀번호 수정</a></li>
+            <li><a href="../auth/login.html" class="logout">로그아웃</a></li>
           </ul>
       </div>
   </header>
@@ -29,6 +30,5 @@
 
       <div id="post-list"></div>
     </div>
-    <script src="../../js/pages/posts/list.js"></script>
   </body>
 </html>

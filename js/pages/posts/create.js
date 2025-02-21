@@ -1,12 +1,14 @@
-import { apiRequest } from "../api/request.js";
-import { ENDPOINTS } from "../api/endpoints.js";
+// import { apiRequest } from "../api/request.js";
+// import { ENDPOINTS } from "../api/endpoints.js";
 
-async function createPost(postData) {
-  return apiRequest(ENDPOINTS.POSTS.CREATE, "POST", postData);
-}
+// async function createPost(postData) {
+//   return apiRequest(ENDPOINTS.POSTS.CREATE, "POST", postData);
+// }
 
+import { renderHeader } from '/js/components/header.mjs'; 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+    renderHeader();  // 공통 헤더 삽입 
     const titleInput = document.getElementById("title");
     const contentInput = document.getElementById("content");
     const fileInput = document.getElementById("picture-upload");
@@ -44,6 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
             helperText.classList.remove("hidden");
         } else {
             window.location.href = "../main/main.html";
+        }
+    });
+    
+    document.addEventListener("click", (event) => {
+        const dropdown = document.getElementById("dropdown-menu");
+
+        if (event.target.matches(".profile-img")) {
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        } else if (dropdown) {
+            dropdown.style.display = "none";
         }
     });
 });

@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
     registerBtn.addEventListener("click", function () {
         if (!registerBtn.disabled) {
             alert("회원가입 성공");
-            window.location.href = "../login/login.html";
+            window.location.href = "../auth/login.html";
         }
     });
 });
 // 뒤로가기 기능
 function goBack() {
-    window.location.href = "../login/login.html";
+    window.location.href = "../auth/login.html";
 }
