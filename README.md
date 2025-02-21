@@ -15,25 +15,60 @@ VSCode에서 Go Live로 실행 ([http://localhost:5500](http://localhost:5500)�
 닉네임 목록: ["user123", "nickname1"]
 
 
-특정 화면을 보고 싶다면 다음과 같이 원하는 기능(x)을 url에 넣으면 된다.    
-http://localhost:5500/x/x.html  
+
+### 폴더 구성
+
+/project-root  
+│── index.html              # 메인 페이지  
+│── pages/  
+│   ├── posts/  
+│   │   ├── list.html      # 게시글 목록 조회 페이지  
+│   │   ├── detail.html    # 게시글 상세 페이지  
+│   │   ├── create.html    # 새 게시글 작성 페이지  
+│   │   ├── edit.html      # 게시글 수정 페이지  
+│   ├── users/  
+│   │   ├── profile.html   # 사용자 프로필 페이지  
+│   │   ├── password.html  # 비밀번호 변경 페이지  
+│   ├── auth/  
+│   │   ├── login.html     # 로그인 페이지  
+│   │   ├── register.html  # 회원가입 페이지  
+│   ├── media/  
+│   │   ├── images.html    # 이미지 목록 페이지  
+│   
+│── css/  
+│   ├── main.css            # 전체 스타일   
+│   ├── components/         # UI 컴포넌트 스타일  
+│   ├── pages/              # 개별 페이지 스타일  
+│   
+│── js/  
+│   ├── main.js             # 초기 실행 파일  
+│   ├── api/                # API 관련 코드  
+│   │   ├── request.js      # API 요청 함수  
+│   │   ├── endpoints.js    # API 엔드포인트 정리  
+│   ├── components/         # UI 컴포넌트 관련 JS  
+│   │   ├── header.mjs      # 헤더  
+│   ├── pages/              # 페이지별 JS  
+│   │   ├── posts/          # 게시글 관련 기능  
+│   │   │   ├── create.js   # 새 게시글 작성  
+│   │   │   ├── edit.js     # 게시글 수정  
+│   │   │   ├── detail.js   # 게시글 상세보기  
+│   │   ├── users/          # 사용자 관련 기능  
+│   │   │   ├── profile.js  # 프로필 조회/수정  
+│   │   │   ├── password.js # 비밀번호 변경  
+│   │   ├── auth/           # 인증 관련 기능  
+│   │   │   ├── login.js    # 로그인  
+│   │   │   ├── register.js # 회원가입  
+│── assets/   
+│   ├── images/             # 이미지 리소스    
+│   ├── fonts/              # 웹 폰트  
+│── data/                   # JSON, 로컬 데이터  
+│── utils/                  # 유틸리티 함수 (날짜 변환, 포맷팅 등)   
+│── README.md               # 프로젝트 설명 파일   
 
 
 
-| x | 기능 |
-| --- | --- |
-| [edit-post](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/edit-post) | 게시글 수정 |
-| [login](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/login) | 로그인 |
-| [main](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/main) | 게시글 목록 |
-| [make post](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/make%20post) | 게시글 생성 |
-| [post-detail](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/post-detail) | 게시글 상세보기 |
-| [profile](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/profile) | 프로필 수정 |
-| [pwChange](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/pwChange) | 비밀번호 수정 |
-| [register](https://github.com/100-hours-a-week/2-holly-kim-week3/tree/main/register) | 회원가입 |
 
-
-
-### 보완해야 할 점
+### 4주차에 보완해야 할 점 - 기능 구현하기
 
 이번 주차에서는 디자인에 따라 사용자에게 보여지는 화면을 구성한 것, 링크 리다이렉트에 초점을 두었다.   
 아래의 사항들은 추후에 보완해야 한다.  
@@ -46,18 +81,4 @@ http://localhost:5500/x/x.html
 5. 아이디를 추가하면 그 아이디가 기존 아이디 리스트에 추가되게 하는 것 
 
 
-
-현재는 mock data로 유효성 검증을 했다. 
-
-
-또한 현재 endpoint들이 동사로 되어 있는 경우들(edit-post, make post, pwChange, register)이 있는데 이는 추후에 바꿀 것이다.  
-| 기존 URL | RESTful한 URL |
-| --- | --- |
-| `/edit-post` | `PUT /posts/{post_id}` |
-| `/login` | `POST /auth/login` |
-| `/main` | `GET /posts` |
-| `/make-post` | `POST /posts` |
-| `/post-detail` | `GET /posts/{post_id}` |
-| `/profile` | `GET /users/{user_id}` |
-| `/pwChange` | `PUT /users/{user_id}/password` |
-| `/register` | `POST /auth/register` |
+현재는 mock data로 유효성 검증을 했다.  
