@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre></pre>
+    <script>
+        const request = {
+    get(url) {
+        return fetch(url);
+    },
+    post(url, payload) {
+        return fetch(url, {
+            method: 'POST',
+            headers: { 'content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    },
+    patch(url, payload) {
+        return fetch(url, {
+            method: 'PATCH',
+            headers: { 'content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    },
+    delete(url) {
+        return fetch(url, { method: 'DELETE' });
+    }
+};
+
+// get
+request.get('/todos/1')
+    .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    })
+    .then(todos => console.log(todos))
+    .catch(err => console.error(err));
+
+
+// post
+request.post('/todos', {
+    userId: 1,
+    title: 'javascript',
+    completed: false
+})
+    .then(response => { 
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    })
+    .then(todos => console.log(todos))
+    .catch(err => console.log(err));
+
+
+// patch
+request.patch('/todos/1', {
+    completed: true
+})
+    .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    })
+    .then(todos => console.log(todos))
+    .catch(err => console.log(err));
+
+
+
+// delete
+request.delete('/todos/1')
+    .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    })
+    .then(todos => console.log(todos))
+    .catch(err => console.log(err));
+
+    </script>
+</body>
+</html>
