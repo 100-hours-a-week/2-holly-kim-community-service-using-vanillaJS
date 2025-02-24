@@ -1,3 +1,4 @@
+import {}
 document.addEventListener("DOMContentLoaded", () => {
     const mockNicknames = ["user1", "admin", "master"]; // 닉네임 중복 확인용 
 
@@ -10,33 +11,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const quitConfirmBtn = document.querySelector(".confirm-btn"); // 탈퇴 확정 버튼 수정
     const profileImg = document.querySelector(".profile-img");
     const dropdown = document.getElementById("dropdown-menu");
+    const updateBtn = document.getElementById("update-btn");
 
+    let nickname = "";
     // 닉네임 검증 함수
     const validateNickname = () => {
         const nicknameInput = document.getElementById("nickname");
         const errorText = document.getElementById("nickname-error");
         if (!nicknameInput || !errorText) return;
 
-        const nickname = nicknameInput.value.trim();
+        if (nicknameInput.value !== nicknameInput.value.trim()) return false;
+
+        nickname = nicknameInput.value;
 
         if (!nickname) {
             errorText.textContent = "*닉네임을 입력해주세요.";
-            return;
+            return false;
         }
 
         if (nickname.length > 10) {
             errorText.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
-            return;
+            return false;
         }
 
         if (mockNicknames.includes(nickname)) {
             errorText.textContent = "*중복된 닉네임입니다.";
-            return;
+            return false;
         }
 
         errorText.textContent = "";
         showToast();
     };
+
+    updateBtn.addEventListener("click", async()=>{
+        if(!validateNickname()) return;
+        try{
+            const result = await updateProfile();
+            if (result){
+                
+            } else{
+                alert("프로필 수정 중 오류가 발생했습니다.");
+            }
+        }catch(error){
+            console.error("프로필 수정 중 오류: ", error);
+            alert("프로필 수정 중 오류가 발생했습니다.");
+        }
+    });
+
 
     // 토스트 메시지 표시 함수
     const showToast = () => {

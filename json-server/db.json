@@ -1,19 +1,59 @@
 {
-    "todos":[
+  "posts": [
+    {
+      "author": "current user",
+      "title": "안녕",
+      "content": "hi there",
+      "created_at": "2025-02-24T14:23:22.854Z",
+      "likes": 1,
+      "comments": [
         {
-            "id":1,
-            "content": "HTML",
-            "completed": true
+          "id": 1,
+          "author": "현재 사용자",
+          "date": "2025-02-24T14:23:43.225Z",
+          "content": "맞지요? 그죠??"
         },
         {
-            "id":2,
-            "content": "CSS",
-            "completed": false
+          "id": 2,
+          "author": "현재 사용자",
+          "date": "2025-02-24T14:56:52.965Z",
+          "content": "그 사람 맞네"
         },
         {
-            "id":3,
-            "content": "Javascript",
-            "completed": true
+          "id": 3,
+          "author": "현재 사용자",
+          "date": "2025-02-24T14:57:01.087Z",
+          "content": "또 왔어?"
         }
-    ]
+      ],
+      "views": 0,
+      "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg",
+      "id": 1
+    },
+    {
+      "author": "current user",
+      "title": "깨노니",
+      "content": "알아?",
+      "created_at": "2025-02-24T14:24:28.397Z",
+      "likes": 1,
+      "comments": [
+        {
+          "id": 1,
+          "author": "현재 사용자",
+          "date": "2025-02-24T14:57:27.381Z",
+          "content": "어 알아"
+        }
+      ],
+      "views": 1,
+      "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg",
+      "id": 3
+    }
+  ],
+  "profile": [
+    {
+      "nickname": "typicode",
+      "password": "User@5678",
+      "email": "user@example.com"
+    }
+  ]
 }

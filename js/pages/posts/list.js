@@ -1,42 +1,19 @@
-// import { apiRequest } from "../../api/request.js";
-// import { ENDPOINTS } from "../../api/endpoints.js";
-
-// async function fetchPosts() {
-//   try {
-//     const posts = await apiRequest(ENDPOINTS.POSTS.LIST);
-//     renderPosts(posts);
-//   } catch (error) {
-//     console.error("게시글 목록을 불러오는 중 오류 발생:", error);
-//   }
-// }
-
-// function renderPosts(posts) {
-//   const postContainer = document.getElementById("post-list");
-//   postContainer.innerHTML = posts
-//     .map((post) => `<div class="post-item">${post.title}</div>`)
-//     .join("");
-// }
-
-// document.addEventListener("DOMContentLoaded", fetchPosts);
-
+import { fetchPosts } from "../../api/request.mjs";
 
 let postCount = 0;
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const postList = document.querySelector("#post-list");
     const createBtn = document.querySelector("#create-btn");
     const dropdownMenu = document.querySelector("#dropdown-menu");
     const profileImg = document.querySelector(".profile-img");
 
     // 날짜 및 시간 포맷팅 함수
-    const getFormattedDate = () => {
-        const now = new Date();
-        const yyyy = now.getFullYear();
-        const mm = String(now.getMonth() + 1).padStart(2, '0');
-        const dd = String(now.getDate()).padStart(2, '0');
-        const hh = String(now.getHours()).padStart(2, '0');
-        const min = String(now.getMinutes()).padStart(2, '0');
-        const ss = String(now.getSeconds()).padStart(2, '0');
-        return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+    const getFormattedDate = (post) => {
+        return new Date(post.created_at).toISOString().replace("T", " ").slice(0, 19);
+    }
+
+    const getFormattedCurrentDate = () => {
+        return new Date().toISOString().replace("T", " ").slice(0, 19);
     }
 
     // 숫자 단위 변환 함수
@@ -47,62 +24,73 @@ document.addEventListener("DOMContentLoaded", () => {
         return num;
     };
 
-    // 게시글 생성 함수
-    const createPost = (title, stats, date, author, authorImgUrl) => {
+    const handlePostClick = (event) => {
+        const postElement = event.currentTarget;
+        const postId = parseInt(postElement.getAttribute("data-id")); // 클릭한 게시글의 ID를 가져옴
+        window.location.href = `../../pages/posts/detail.html?postId=${postId}`; // 상세 페이지 이동
+    };
+
+    // 게시글 카드 생성 함수
+    const createPost = (post) => {
+        const postStats = `좋아요 ${formatNumber(`${post.likes}`)} | 댓글 ${formatNumber(`${post.comments.length}`)} | 조회수 ${formatNumber(`${post.views}`)}`;
+        const authorImgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
         const newPost = document.createElement("div");
         newPost.classList.add("post");
+        newPost.setAttribute("data-id", post.id);
         newPost.innerHTML = `
-        <h2>${title.slice(0, 26)}</h2>
-        <p class="meta">${stats}</p>
-        <p class="time">${date}</p> 
+        <h2>${post.title.slice(0, 26)}</h2>
+        <p class="meta">${postStats}</p>
+        <p class="time">${getFormattedDate(post)}</p> 
         <div class="author-container">
-            <img src="${authorImgUrl}" alt="${author}의 프로필" class="author-img">
-            <p class="author">${author}</p>
+            <img src="${authorImgUrl}" alt="${post.author}의 프로필" class="author-img">
+            <p class="author">${post.author}</p>
         </div>
     `;
 
         // 카드 클릭 시 게시글 상세 페이지로 이동
-        newPost.addEventListener("click", () => {
-            window.location.href = `../../pages/posts/detail.html?id=${postCount}`;
-        });
-
+        newPost.addEventListener("click", handlePostClick);
         postList.appendChild(newPost);
-        postCount++;
     };
 
-    // 초기 게시글 로드
-    const loadInitialPosts = () => {
-        Array.from({ length: 3 }, () => {
-            const likes = Math.floor(Math.random() * 1500);
-            const comments = Math.floor(Math.random() * 1200);
-            const views = Math.floor(Math.random() * 200000);
-            const postStats = `좋아요 ${formatNumber(likes)} | 댓글 ${formatNumber(comments)} | 조회수 ${formatNumber(views)}`;
-            createPost("제목 1", postStats, getFormattedDate(), "더미 작성자 1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s");
-        });
-    };
+    const posts = await fetchPosts();
+    postList.innerHTML = ""; // 기존 목록 초기화
 
-    // 추가 게시글 로드
-    const loadMorePosts = () => {
-        Array.from({ length: 3 }, () => {
-            const likes = Math.floor(Math.random() * 1500);
-            const comments = Math.floor(Math.random() * 1200);
-            const views = Math.floor(Math.random() * 200000);
-            const postStats = `좋아요 ${formatNumber(likes)} | 댓글 ${formatNumber(comments)} | 조회수 ${formatNumber(views)}`;
-            createPost("제목 1", postStats, getFormattedDate(), "더미 작성자 1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s");
-        });
-    };
+    posts.forEach((post) => {
+        createPost(post);
+    });
+
+
+    // // 추가 게시글 로드
+    // const loadMorePosts = () => {
+    //     Array.from({ length: 1 }, () => {
+    //         const likes = Math.floor(Math.random() * 1500);
+    //         const comments = Math.floor(Math.random() * 1200);
+    //         const views = Math.floor(Math.random() * 200000);
+    //         const postStats = `좋아요 ${formatNumber(likes)} | 댓글 ${formatNumber(comments)} | 조회수 ${formatNumber(views)}`;
+    //         // 실제 게시글 객체 생성
+    //         const dummyPost = {
+    //             id: 0, // 고유 id 부여
+    //             title: "제목 1",
+    //             stats: postStats,
+    //             date: getFormattedCurrentDate(),
+    //             author: "더미 작성자 1",
+    //             authorImgUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s"
+    //         };
+    //         createPost(dummyPost);
+    //     });
+    // };
 
     // 게시글 작성 버튼 이벤트
     createBtn.addEventListener("click", () => {
         window.location.href = "../../pages/posts/create.html";
     });
 
-    // 인피니티 스크롤 이벤트
-    window.addEventListener("scroll", () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-            loadMorePosts();
-        }
-    });
+    // // 인피니티 스크롤 이벤트
+    // window.addEventListener("scroll", () => {
+    //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    //         loadMorePosts();
+    //     }
+    // });
 
     // 드롭다운 메뉴 토글 함수
     const toggleDropdown = () => {
@@ -116,7 +104,4 @@ document.addEventListener("DOMContentLoaded", () => {
             dropdownMenu.style.display = "none";
         }
     });
-
-    // 초기 실행
-    loadInitialPosts();
 });

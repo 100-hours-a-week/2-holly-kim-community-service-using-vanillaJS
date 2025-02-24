@@ -1,13 +1,7 @@
-// import { apiRequest } from "../api/request.js";
-// import { ENDPOINTS } from "../api/endpoints.js";
-
-// async function createPost(postData) {
-//   return apiRequest(ENDPOINTS.POSTS.CREATE, "POST", postData);
-// }
-
 import { renderHeader } from '/js/components/header.mjs'; 
+import { createPost } from "../../api/request.mjs";
 
-document.addEventListener("DOMContentLoaded", () => {
+
     renderHeader();  // 공통 헤더 삽입 
     const titleInput = document.getElementById("title");
     const contentInput = document.getElementById("content");
@@ -41,11 +35,45 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("file-name").textContent = fileName;
     });
 
-    submitBtn.addEventListener("click", function () {
+    submitBtn.addEventListener("click", async(event) => {
+        event.preventDefault();
+        const title = titleInput.value; 
+        const content = contentInput.value;
+        const author = "current user";
+        const created_at = new Date(Date.now()).toISOString();
+        const views=0;
+        const comments=[];
+        const likes=0;
+        // 파일 가져오기
+    const file = fileInput.files[0];
+
+    let imgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg"; // 기본값은 새 사진
+    if (file) {
+        // const formData = new FormData();
+        // formData.append('file', file);
+
+        // try {
+        //     const response = await fetch('/upload', {
+        //         method: 'POST',
+        //         body: formData
+        //     });
+        //     const result = await response.json();
+        //     if (response.ok) {
+        //         imgUrl = result.picture; // 업로드된 파일의 경로
+        //     } else {
+        //         alert("파일 업로드 실패: " + result.message);
+        //     }
+        // } catch (error) {
+        //     console.error("오류 발생:", error);
+        // }
+    }
+
+        await createPost(author, title, content, created_at, likes, comments, views, imgUrl);
+
         if (titleInput.value.trim() === "" || contentInput.value.trim() === "") {
             helperText.classList.remove("hidden");
         } else {
-            window.location.href = "../main/main.html";
+            window.location.href = "../posts/list.html";
         }
     });
     
@@ -58,4 +86,4 @@ document.addEventListener("DOMContentLoaded", () => {
             dropdown.style.display = "none";
         }
     });
-});
+

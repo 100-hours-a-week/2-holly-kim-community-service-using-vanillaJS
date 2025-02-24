@@ -4,7 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordCheckInput = document.getElementById("password-check");
     const updateBtn = document.getElementById("update-btn");
     const dropdown = document.getElementById("dropdown-menu");
+    const mainBtn = document.querySelector(".homepage");
 
+    // 홈페이지 이동
+    if (mainBtn) {
+        mainBtn.addEventListener("click", () => {
+            window.location.href = "/pages/posts/list.html";
+        });
+    }
+    
     // 오류 메시지 설정 및 제거
     const setError = (id, message) => {
         document.getElementById(id).textContent = message;
