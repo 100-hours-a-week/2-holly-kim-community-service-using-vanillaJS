@@ -1,3 +1,5 @@
+import { registerUser, checkDuplicate } from "../../api/request.mjs";
+
 document.addEventListener("DOMContentLoaded", function () {
     const pictureUpload = document.getElementById("picture-upload");
     const profilePreview = document.getElementById("profile-preview");
@@ -7,39 +9,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const nicknameInput = document.getElementById("nickname");
     const registerBtn = document.getElementById("register-btn");
 
-    // 가짜 데이터베이스 (중복 확인용)
-    const existingEmails = ["test@example.com", "user@example.com"];
-    const existingNicknames = ["user123", "nickname1"];
+    let profileImageBase64 = ""; // 프로필 이미지를 저장할 변수
 
+    // 프로필 사진 업로드 처리
     pictureUpload.addEventListener("change", function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 profilePreview.innerHTML = `<img src="${e.target.result}" alt="프로필 사진">`;
+                profileImageBase64 = e.target.result; // Base64로 저장
             };
             reader.readAsDataURL(file);
         }
         validateForm();
     });
 
-    // 이메일 유효성 검사 및 중복 확인
-    emailInput.addEventListener("blur", function () {
-        // 입력된 모든 문자가 영문, '@', '.' 만 포함하는지 체크
-        const allowedPattern = /^[A-Za-z@.]+$/;
-        // 올바른 이메일 형식을 체크 (영문만 사용)
+    // 이메일 중복 확인 및 유효성 검사
+    emailInput.addEventListener("blur", async function () {
         const emailPattern = /^[A-Za-z]+(?:\.[A-Za-z]+)*@[A-Za-z]+\.[A-Za-z]+$/;
-        
+
         if (!emailInput.value) {
             setError("email-error", "*이메일을 입력해주세요.");
-        } else if (!allowedPattern.test(emailInput.value)) {
-            setError("email-error", "*영문과 '@', '.'만 사용 가능합니다.");
         } else if (!emailPattern.test(emailInput.value)) {
             setError("email-error", "*올바른 이메일 주소 형식을 입력해 주세요.");
-        } else if (existingEmails.includes(emailInput.value)) {
-            setError("email-error", "*중복된 이메일입니다.");
         } else {
-            clearError("email-error");
+            const isDuplicate = await checkDuplicate("email", emailInput.value);
+            if (isDuplicate) {
+                setError("email-error", "*중복된 이메일입니다.");
+            } else {
+                clearError("email-error");
+            }
         }
         validateForm();
     });
@@ -69,18 +69,21 @@ document.addEventListener("DOMContentLoaded", function () {
         validateForm();
     });
 
-    // 닉네임 유효성 검사 및 중복 확인
-    nicknameInput.addEventListener("blur", function () {
+    // 닉네임 중복 확인 및 유효성 검사
+    nicknameInput.addEventListener("blur", async function () {
         if (!nicknameInput.value) {
             setError("nickname-error", "*닉네임을 입력해주세요.");
         } else if (nicknameInput.value.length > 10) {
             setError("nickname-error", "*닉네임은 최대 10자까지 작성 가능합니다.");
         } else if (/\s/.test(nicknameInput.value)) {
             setError("nickname-error", "*띄어쓰기를 없애주세요.");
-        } else if (existingNicknames.includes(nicknameInput.value)) {
-            setError("nickname-error", "*중복된 닉네임입니다.");
         } else {
-            clearError("nickname-error");
+            const isDuplicate = await checkDuplicate("nickname", nicknameInput.value);
+            if (isDuplicate) {
+                setError("nickname-error", "*중복된 닉네임입니다.");
+            } else {
+                clearError("nickname-error");
+            }
         }
         validateForm();
     });
@@ -88,24 +91,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // 폼 유효성 검사 및 회원가입 버튼 활성화
     function validateForm() {
         let isValid = true;
-        
-        // 프로필 사진 유효성 검사: 업로드하지 않았으면 오류 메시지 출력
+
         if (!pictureUpload.files.length) {
             setError("picture-error", "*프로필 사진을 추가해 주세요.");
             isValid = false;
         } else {
             clearError("picture-error");
         }
-        
-        isValid = isValid &&
-            emailInput.value && !document.getElementById("email-error").textContent &&
-            passwordInput.value && !document.getElementById("password-error").textContent &&
-            passwordCheckInput.value && !document.getElementById("password-check-error").textContent &&
-            nicknameInput.value && !document.getElementById("nickname-error").textContent;
-        
+
+        isValid =
+            isValid &&
+            emailInput.value &&
+            !document.getElementById("email-error").textContent &&
+            passwordInput.value &&
+            !document.getElementById("password-error").textContent &&
+            passwordCheckInput.value &&
+            !document.getElementById("password-check-error").textContent &&
+            nicknameInput.value &&
+            !document.getElementById("nickname-error").textContent;
+
         registerBtn.disabled = !isValid;
     }
-    
+
     function setError(id, message) {
         document.getElementById(id).textContent = message;
     }
@@ -114,14 +121,25 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(id).textContent = "";
     }
 
-    registerBtn.addEventListener("click", function () {
+    // 회원가입 버튼 클릭 이벤트
+    registerBtn.addEventListener("click", async function () {
         if (!registerBtn.disabled) {
-            alert("회원가입 성공");
-            window.location.href = "../auth/login.html";
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const nickname = nicknameInput.value;
+
+            try {
+                const newUser = await registerUser(email, password, nickname, profileImageBase64);
+                if (newUser) {
+                    alert("회원가입 성공!");
+                    window.location.href = "../auth/login.html";
+                } else {
+                    alert("회원가입 중 오류가 발생했습니다.");
+                }
+            } catch (error) {
+                console.error("회원가입 오류:", error);
+                alert("회원가입 중 오류가 발생했습니다.");
+            }
         }
     });
 });
-// 뒤로가기 기능
-function goBack() {
-    window.location.href = "../auth/login.html";
-}

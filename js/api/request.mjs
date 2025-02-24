@@ -97,4 +97,145 @@ export async function updatePostLikes(postId, likes) {
         console.error("좋아요 업데이트 실패:", error);
     }
 }
+ 
+
+// 프로필 목록 가져오기 (GET) 
+export async function getProfiles() {
+  try {
+    const response = await fetch(`${BASE_URL}/profile`);
+    const profiles = await response.json();
+    return profiles;
+  } catch (error) {
+    console.error("프로필 가져오기 실패:", error);
+    throw error;
+  }
+}
+
+// 프로필 업데이트 (PATCH) 
+export async function updateProfile(profileId, profileData) {
+  try {
+    const response = await fetch(`${BASE_URL}/profile/${profileId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(profileData)
+    });
+
+    if (!response.ok) {
+      throw new Error("프로필 업데이트 실패");
+    }
+
+    const updatedProfile = await response.json();
+    return updatedProfile;
+  } catch (error) {
+    console.error("프로필 업데이트 실패:", error);
+    return null;
+  }
+}
+
+// 비밀번호 변경 (PATCH)
+export async function updatePassword(profileId, newPassword) {
+    try {
+        const response = await fetch(`${BASE_URL}/profile/${profileId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ password: newPassword }) // 비밀번호만 업데이트
+        });
+
+        if (!response.ok) {
+            throw new Error("비밀번호 변경 실패");
+        }
+
+        const updatedProfile = await response.json();
+        return updatedProfile;
+    } catch (error) {
+        console.error("비밀번호 변경 실패:", error);
+        return null;
+    }
+}
+
+// 프로필 정보 가져오기 (기존 사용자 정보 조회)
+export async function getProfile(profileId) {
+    try {
+        const response = await fetch(`${BASE_URL}/profile/${profileId}`);
+
+        if (!response.ok) {
+            throw new Error("프로필 조회 실패");
+        }
+
+        const profile = await response.json();
+        return profile;
+    } catch (error) {
+        console.error("프로필 조회 실패:", error);
+        return null;
+    }
+}
+
+// 중복 이메일 또는 닉네임 체크
+export async function checkDuplicate(field, value) {
+    try {
+        const response = await fetch(`${BASE_URL}/profile?${field}=${value}`);
+        const data = await response.json();
+        return data.length > 0; // 중복이 있으면 true, 없으면 false 반환
+    } catch (error) {
+        console.error("중복 확인 실패:", error);
+        return false;
+    }
+}
+
+// 회원가입 (POST)
+export async function registerUser(email, password, nickname, profileImage) {
+    try {
+        // 이메일과 닉네임 중복 검사
+        const isEmailDuplicate = await checkDuplicate("email", email);
+        const isNicknameDuplicate = await checkDuplicate("nickname", nickname);
+
+        if (isEmailDuplicate) {
+            throw new Error("이미 사용 중인 이메일입니다.");
+        }
+        if (isNicknameDuplicate) {
+            throw new Error("이미 사용 중인 닉네임입니다.");
+        }
+
+        // 새 사용자 추가
+        const response = await fetch(`${BASE_URL}/profile`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password, // 실제 서비스에서는 비밀번호 해싱 필요 (bcrypt.js 사용 가능)
+                nickname,
+                profileImage, // 프로필 이미지 (Base64 형식)
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("회원가입 실패");
+        }
+
+        const newUser = await response.json();
+        return newUser;
+    } catch (error) {
+        console.error("회원가입 오류:", error);
+        return null;
+    }
+}
+
+// request.mjs
+export async function loginUser(email, password) {
+  try {
+      const response = await fetch(`${BASE_URL}/profile?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+      const users = await response.json();
+ 
+      return users.length > 0;  
+  } catch (error) {
+      console.error("Login error:", error);
+      return false;  
+  }
+}
 

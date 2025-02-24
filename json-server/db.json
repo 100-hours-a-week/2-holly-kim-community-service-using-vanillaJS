@@ -47,13 +47,31 @@
       "views": 1,
       "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg",
       "id": 3
+    },
+    {
+      "author": "current user",
+      "title": "slim shady",
+      "content": "guess who's back",
+      "created_at": "2025-02-24T16:16:28.125Z",
+      "likes": 1,
+      "comments": [],
+      "views": 0,
+      "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg",
+      "id": 4
     }
   ],
   "profile": [
     {
-      "nickname": "typicode",
-      "password": "User@5678",
-      "email": "user@example.com"
+      "nickname": "강아지",
+      "password": "NewSecureP@ssword1",
+      "email": "user@example.com",
+      "id": 1
+    },
+    {
+      "email": "hobbit@gmail.com",
+      "password": "aA1!1111",
+      "nickname": "hobbit",
+      "id": 2
     }
   ]
 }

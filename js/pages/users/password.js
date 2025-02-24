@@ -1,10 +1,13 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 비밀번호 입력 필드 및 버튼 가져오기
+import { updatePassword } from "../../api/request.mjs";
+
+document.addEventListener("DOMContentLoaded", async () => {
     const passwordInput = document.getElementById("password");
     const passwordCheckInput = document.getElementById("password-check");
     const updateBtn = document.getElementById("update-btn");
     const dropdown = document.getElementById("dropdown-menu");
     const mainBtn = document.querySelector(".homepage");
+
+    const profileId = 1; // 현재 로그인된 사용자의 ID (실제 로그인 시스템이 있다면 변경 필요)
 
     // 홈페이지 이동
     if (mainBtn) {
@@ -12,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/pages/posts/list.html";
         });
     }
-    
+
     // 오류 메시지 설정 및 제거
     const setError = (id, message) => {
         document.getElementById(id).textContent = message;
@@ -21,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearError = (id) => {
         document.getElementById(id).textContent = "";
     };
+
     // 폼 유효성 검사 및 업데이트 버튼 활성화
     const validateForm = () => {
         const isValid =
@@ -30,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (updateBtn) updateBtn.disabled = !isValid;
     };
 
-    
     // 비밀번호 유효성 검사
     passwordInput.addEventListener("input", () => {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
@@ -59,21 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
         validateForm();
     });
 
-    
-    // 비밀번호 업데이트 버튼 클릭 이벤트
-    updateBtn.addEventListener("click", () => {
+    // 비밀번호 업데이트 버튼 클릭 이벤트 (JSON Server 연동)
+    updateBtn.addEventListener("click", async () => {
         if (!updateBtn.disabled) {
-            alert("비밀번호 업데이트 완료");
-            window.location.href = "profile.html";
+            const newPassword = passwordInput.value;
+            
+            try {
+                const result = await updatePassword(profileId, newPassword);
+                if (result) {
+                    alert("비밀번호 업데이트 완료");
+                    window.location.href = "profile.html";
+                } else {
+                    alert("비밀번호 변경 중 오류가 발생했습니다.");
+                }
+            } catch (error) {
+                console.error("비밀번호 변경 오류:", error);
+                alert("비밀번호 변경 중 오류가 발생했습니다.");
+            }
         }
     });
- 
-    document.addEventListener("click", (event) => { 
+
+    // 프로필 이미지 클릭 시 드롭다운 표시/숨김
+    document.addEventListener("click", (event) => {
         if (event.target.matches(".profile-img")) {
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         } else if (dropdown) {
             dropdown.style.display = "none";
         }
     });
-
 });

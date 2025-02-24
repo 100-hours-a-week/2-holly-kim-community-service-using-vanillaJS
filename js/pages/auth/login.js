@@ -1,3 +1,5 @@
+import { loginUser } from "../../api/request.mjs"; // Import the loginUser function
+
 document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -5,12 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const emailError = document.getElementById("email-error");
     const passwordError = document.getElementById("password-error");
-
-    // Mock 데이터 (로그인 검증용)
-    const mockUsers = [
-        { email: "test@example.com", password: "Test@1234" },
-        { email: "user@example.com", password: "User@5678" },
-    ];
 
     let emailValid = false;
     let passwordValid = false;
@@ -66,16 +62,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 로그인 검증
-    loginBtn.addEventListener("click", function () {
+    loginBtn.addEventListener("click", async function () {
         if (loginBtn.disabled) return;
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        // Mock 데이터에서 사용자 찾기
-        const user = mockUsers.find((user) => user.email === email && user.password === password);
+        // Use the loginUser function to check credentials
+        const isAuthenticated = await loginUser(email, password);
 
-        if (user) {
+        if (isAuthenticated) {
             alert("로그인 성공");
             window.location.href = "../../../pages/posts/list.html";
         } else {

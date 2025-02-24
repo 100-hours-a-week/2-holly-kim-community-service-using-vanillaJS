@@ -1,26 +1,30 @@
-import {}
-document.addEventListener("DOMContentLoaded", () => {
-    const mockNicknames = ["user1", "admin", "master"]; // 닉네임 중복 확인용 
+import { updateProfile, getProfiles } from "../../api/request.mjs";
 
+document.addEventListener("DOMContentLoaded", () => {
     const pictureUpload = document.getElementById("picture-upload");
     const profilePreview = document.getElementById("profile-preview");
     const quitBtn = document.querySelector(".quit");
     const quitModal = document.getElementById("quit-modal");
     const mainBtn = document.querySelector(".homepage");
-    const closeModalBtn = document.querySelector(".reject-btn"); // 모달 닫기 버튼 수정
-    const quitConfirmBtn = document.querySelector(".confirm-btn"); // 탈퇴 확정 버튼 수정
+    const closeModalBtn = document.querySelector(".reject-btn"); // 모달 닫기 버튼
+    const quitConfirmBtn = document.querySelector(".confirm-btn"); // 탈퇴 확정 버튼
     const profileImg = document.querySelector(".profile-img");
     const dropdown = document.getElementById("dropdown-menu");
     const updateBtn = document.getElementById("update-btn");
 
     let nickname = "";
-    // 닉네임 검증 함수
-    const validateNickname = () => {
+    let profileImageData = ""; // 파일 업로드로 읽은 이미지 데이터를 저장
+
+    // 닉네임 검증 함수 (json-server의 프로필 데이터를 기반으로 중복 검사)
+    const validateNickname = async () => {
         const nicknameInput = document.getElementById("nickname");
         const errorText = document.getElementById("nickname-error");
-        if (!nicknameInput || !errorText) return;
+        if (!nicknameInput || !errorText) return false;
 
-        if (nicknameInput.value !== nicknameInput.value.trim()) return false;
+        if (nicknameInput.value !== nicknameInput.value.replace(" ","")) {
+            errorText.textContent = "*공백이 제거된 닉네임을 입력해주세요.";
+            return false;
+        }
 
         nickname = nicknameInput.value;
 
@@ -34,30 +38,48 @@ document.addEventListener("DOMContentLoaded", () => {
             return false;
         }
 
-        if (mockNicknames.includes(nickname)) {
-            errorText.textContent = "*중복된 닉네임입니다.";
+        try {
+            // json-server의 db.json에서 프로필 데이터를 가져옴
+            const profiles = await getProfiles();
+            // 입력한 닉네임과 동일한 닉네임이 존재하는지 확인
+            const duplicate = profiles.find((profile) => profile.nickname === nickname);
+            if (duplicate) {
+                errorText.textContent = "*중복된 닉네임입니다.";
+                return false;
+            }
+        } catch (error) {
+            console.error("닉네임 중복 확인 중 오류: ", error);
+            errorText.textContent = "*닉네임 확인 중 오류가 발생했습니다.";
             return false;
         }
 
         errorText.textContent = "";
-        showToast();
+        return true;
     };
 
-    updateBtn.addEventListener("click", async()=>{
-        if(!validateNickname()) return;
-        try{
-            const result = await updateProfile();
-            if (result){
-                
-            } else{
+    updateBtn.addEventListener("click", async () => {
+        const isValid = await validateNickname();
+        if (!isValid) return;
+
+        // 업데이트할 프로필 데이터를 구성
+        const profileData = {
+            nickname: nickname,
+            profileImage: profileImageData // 파일이 업로드되지 않았다면 빈 문자열일 수 있음
+        };
+        const profileId=1;
+        try {
+            const result = await updateProfile(profileId, profileData);
+            if (result) {
+                alert("프로필 수정 완료");
+                // 성공 시 추가 동작이 필요하면 여기에 작성
+            } else {
                 alert("프로필 수정 중 오류가 발생했습니다.");
             }
-        }catch(error){
+        } catch (error) {
             console.error("프로필 수정 중 오류: ", error);
             alert("프로필 수정 중 오류가 발생했습니다.");
         }
     });
-
 
     // 토스트 메시지 표시 함수
     const showToast = () => {
@@ -77,8 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
+                    profileImageData = e.target.result; // Base64 데이터 저장
                     profilePreview.innerHTML = `
-                        <img src="${e.target.result}" alt="프로필 사진">
+                        <img src="${profileImageData}" alt="프로필 사진">
                         <div class="profile-overlay">변경</div>
                     `;
                 };
