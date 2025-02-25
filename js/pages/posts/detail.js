@@ -77,9 +77,11 @@ async function addComment() {
     const content = commentInput.value.trim();
     if (!content) return alert("댓글 내용을 입력하세요.");
 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     const newComment = {
         id: postData.comments.length ? postData.comments[postData.comments.length - 1].id + 1 : 1,
-        author: "현재 사용자", // 실제 사용자 정보 반영 필요
+        author: currentUser.nickname,
         date: new Date().toISOString(),
         content: content
     };

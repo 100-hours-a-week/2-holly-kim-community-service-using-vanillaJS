@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dropdown = document.getElementById("dropdown-menu");
     const mainBtn = document.querySelector(".homepage");
 
-    const profileId = 1; // 현재 로그인된 사용자의 ID (실제 로그인 시스템이 있다면 변경 필요)
 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const profileId = currentUser.id;
+    
     // 홈페이지 이동
     if (mainBtn) {
         mainBtn.addEventListener("click", () => {

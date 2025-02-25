@@ -68,10 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        // Use the loginUser function to check credentials
-        const isAuthenticated = await loginUser(email, password);
+        // Use the loginUser function to get user data
+        const user = await loginUser(email, password);
 
-        if (isAuthenticated) {
+        if (user) {
+            // 로그인 성공 시 사용자 정보를 localStorage에 저장
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            
             alert("로그인 성공");
             window.location.href = "../../../pages/posts/list.html";
         } else {

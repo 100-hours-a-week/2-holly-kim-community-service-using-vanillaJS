@@ -225,17 +225,12 @@ export async function registerUser(email, password, nickname, profileImage) {
         return null;
     }
 }
-
-// request.mjs
-export async function loginUser(email, password) {
-  try {
-      const response = await fetch(`${BASE_URL}/profile?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
-      const users = await response.json();
  
-      return users.length > 0;  
-  } catch (error) {
-      console.error("Login error:", error);
-      return false;  
-  }
-}
+export async function loginUser(email, password) {
+  const response = await fetch(`${BASE_URL}/profile`);
+  const users = await response.json();
 
+  const user = users.find((u) => u.email === email && u.password === password);
+  console.log(user);
+  return user || null; // 로그인 성공 시 사용자 객체 반환, 실패 시 null 반환
+}

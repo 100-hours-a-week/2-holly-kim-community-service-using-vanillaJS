@@ -1,6 +1,6 @@
 import { fetchPosts } from "../../api/request.mjs";
 
-let postCount = 0;
+
 document.addEventListener("DOMContentLoaded", async () => {
     const postList = document.querySelector("#post-list");
     const createBtn = document.querySelector("#create-btn");
@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         return new Date(post.created_at).toISOString().replace("T", " ").slice(0, 19);
     }
 
-    const getFormattedCurrentDate = () => {
-        return new Date().toISOString().replace("T", " ").slice(0, 19);
-    }
+    // const getFormattedCurrentDate = () => {
+    //     return new Date().toISOString().replace("T", " ").slice(0, 19);
+    // }
 
     // 숫자 단위 변환 함수
     const formatNumber = (num) => {
@@ -30,24 +30,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = `../../pages/posts/detail.html?postId=${postId}`; // 상세 페이지 이동
     };
 
-    // 게시글 카드 생성 함수
-    const createPost = (post) => {
-        const postStats = `좋아요 ${formatNumber(`${post.likes}`)} | 댓글 ${formatNumber(`${post.comments.length}`)} | 조회수 ${formatNumber(`${post.views}`)}`;
-        const authorImgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
+    // 게시글 카드 생성 함수 (비동기)
+    const createPostCard = async (post) => {
+        const postStats = `좋아요 ${formatNumber(post.likes)} | 댓글 ${formatNumber(post.comments.length)} | 조회수 ${formatNumber(post.views)}`;
+
+        // 작성자에 해당하는 프로필 사진을 IndexedDB에서 조회 (base64 문자열)
+        let authorImgUrl = await getProfileImageFromDB(post.author);
+        if (!authorImgUrl) {
+            // 프로필 사진이 없으면 기본 이미지 사용
+            authorImgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
+        }
+
         const newPost = document.createElement("div");
         newPost.classList.add("post");
         newPost.setAttribute("data-id", post.id);
         newPost.innerHTML = `
-        <h2>${post.title.slice(0, 26)}</h2>
-        <p class="meta">${postStats}</p>
-        <p class="time">${getFormattedDate(post)}</p> 
-        <div class="author-container">
-            <img src="${authorImgUrl}" alt="${post.author}의 프로필" class="author-img">
-            <p class="author">${post.author}</p>
-        </div>
+      <h2>${post.title.slice(0, 26)}</h2>
+      <p class="meta">${postStats}</p>
+      <p class="time">${getFormattedDate(post)}</p> 
+      <div class="author-container">
+          <img src="${authorImgUrl}" alt="${post.author}의 프로필" class="author-img">
+          <p class="author">${post.author}</p>
+      </div>
     `;
 
-        // 카드 클릭 시 게시글 상세 페이지로 이동
+        // 게시글 클릭 시 상세 페이지로 이동
         newPost.addEventListener("click", handlePostClick);
         postList.appendChild(newPost);
     };
@@ -55,9 +62,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const posts = await fetchPosts();
     postList.innerHTML = ""; // 기존 목록 초기화
 
-    posts.forEach((post) => {
-        createPost(post);
-    });
+    // 각 게시글마다 프로필 사진 조회 후 카드 생성 (for-of 문 사용)
+    for (const post of posts) {
+        await createPostCard(post);
+    }
+
 
 
     // // 추가 게시글 로드
