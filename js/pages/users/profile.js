@@ -1,4 +1,6 @@
-import { updateProfile, getProfiles } from "../../api/request.mjs";
+import { updateProfile, getProfiles, loginUser } from "../../api/request.mjs";
+
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 document.addEventListener("DOMContentLoaded", () => {
     const pictureUpload = document.getElementById("picture-upload");
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const errorText = document.getElementById("nickname-error");
         if (!nicknameInput || !errorText) return false;
 
-        if (nicknameInput.value !== nicknameInput.value.replace(" ","")) {
+        if (nicknameInput.value !== nicknameInput.value.replace(" ", "")) {
             errorText.textContent = "*공백이 제거된 닉네임을 입력해주세요.";
             return false;
         }
@@ -61,17 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const isValid = await validateNickname();
         if (!isValid) return;
 
-        // 업데이트할 프로필 데이터를 구성
+        // 업데이트할 프로필 데이터를 구성 (profileImageData가 있으면 추가)
         const profileData = {
-            nickname: nickname,
-            profileImage: profileImageData // 파일이 업로드되지 않았다면 빈 문자열일 수 있음
+            nickname,
+            ...(profileImageData ? { profileImage: profileImageData } : {})
         };
-        const profileId=1;
+        const profileId = currentUser.id;
         try {
             const result = await updateProfile(profileId, profileData);
             if (result) {
-                alert("프로필 수정 완료");
-                // 성공 시 추가 동작이 필요하면 여기에 작성
+                showToast();
+                // 업데이트된 사용자 정보 localStorage에 저장 
+                localStorage.setItem("currentUser", JSON.stringify(result));
             } else {
                 alert("프로필 수정 중 오류가 발생했습니다.");
             }
@@ -89,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toast.classList.add("show");
         setTimeout(() => {
             toast.classList.remove("show");
-        }, 2000);
+        }, 5000);
     };
 
     // 프로필 이미지 변경 미리보기

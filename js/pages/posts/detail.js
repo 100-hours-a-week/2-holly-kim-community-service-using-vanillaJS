@@ -202,7 +202,7 @@ function initializeLikeButton() {
     } else {
         isLiked = false;
         likeButton.classList.remove("liked");
-        likeButton.style.backgroundColor = "#f0f0f0";
+        likeButton.style.backgroundColor = "#F4F5F7";
     }
 }
 

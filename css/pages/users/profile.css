@@ -195,12 +195,12 @@ button:hover {
     left: 50%;
     bottom: 50px;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 1; 
 }
 
 .toast.show {
-    visibility: visible;
-    animation: fadeout 2s forwards;
+    visibility: visible; 
+    animation: fadeout 5s forwards;
 }
 
 @keyframes fadeout {

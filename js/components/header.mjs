@@ -1,4 +1,3 @@
-//header.mjs
 export function renderHeader() {
   const currentUser = JSON.parse(localStorage.getItem('currentUser')); 
 

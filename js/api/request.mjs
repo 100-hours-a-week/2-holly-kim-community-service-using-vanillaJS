@@ -13,12 +13,12 @@ export async function fetchPosts() {
 }
 
 // 게시글 작성 (POST)
-export async function createPost(author, title, content, created_at, likes, comments, views, imgUrl) {
+export async function createPost(email, author, title, content, created_at, likes, comments, views, imgUrl) {
   try {
     const response = await fetch(`${BASE_URL}/posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ author, title, content, created_at, likes, comments, views, imgUrl }),
+      body: JSON.stringify({ email, author, title, content, created_at, likes, comments, views, imgUrl }),
     }); 
     post = await response.json();
     console.log(post);
@@ -97,7 +97,6 @@ export async function updatePostLikes(postId, likes) {
         console.error("좋아요 업데이트 실패:", error);
     }
 }
- 
 
 // 프로필 목록 가져오기 (GET) 
 export async function getProfiles() {
