@@ -1,12 +1,16 @@
 import { updatePassword } from "../../api/request.mjs";
+const currentUser = JSON.parse(localStorage.getItem('currentUser')); 
+const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "../../assets/images/profile.png";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const passwordInput = document.getElementById("password");
     const passwordCheckInput = document.getElementById("password-check");
     const updateBtn = document.getElementById("update-btn");
-    const dropdown = document.getElementById("dropdown-menu");
+    const dropdownMenu = document.querySelector("#dropdown-menu");
     const mainBtn = document.querySelector(".homepage");
+    const profileImg = document.querySelector("#profile-img");
 
+    profileImg.src = profileImage;
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const profileId = currentUser.id;
@@ -84,12 +88,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    // 드롭다운 메뉴 토글 함수
+    const toggleDropdown = () => {
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+    }; 
+
     // 프로필 이미지 클릭 시 드롭다운 표시/숨김
+    profileImg.addEventListener("click", toggleDropdown);
+    
+
     document.addEventListener("click", (event) => {
-        if (event.target.matches(".profile-img")) {
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        } else if (dropdown) {
-            dropdown.style.display = "none";
+        if (!event.target.matches("#profile-img")) {
+            dropdownMenu.style.display = "none";
         }
     });
 });

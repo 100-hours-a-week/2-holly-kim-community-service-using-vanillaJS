@@ -253,6 +253,7 @@ async function removePost() {
     await deletePost(postId); 
     // 게시글 삭제 후 세션 스토리지에서 좋아요 상태 제거
     sessionStorage.removeItem(`liked_${postId}`);
+    sessionStorage.removeItem(`viewed_${postId}`);
     setTimeout(() => {
         window.location.replace("/pages/posts/list.html");
     }, 500); 

@@ -1,6 +1,7 @@
 import { updateProfile, getProfiles, loginUser } from "../../api/request.mjs";
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "../../assets/images/profile.png";
 
 document.addEventListener("DOMContentLoaded", () => {
     const pictureUpload = document.getElementById("picture-upload");
@@ -13,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileImg = document.querySelector(".profile-img");
     const dropdown = document.getElementById("dropdown-menu");
     const updateBtn = document.getElementById("update-btn");
+    const currentImg=document.getElementById("current-img");
+
+    profileImg.src = profileImage;
+    currentImg.src=currentUser.profileImage; 
 
     let nickname = "";
     let profileImageData = ""; // 파일 업로드로 읽은 이미지 데이터를 저장
@@ -165,4 +170,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (quitConfirmBtn) {
         quitConfirmBtn.addEventListener("click", quit);
     }
+    
 });
