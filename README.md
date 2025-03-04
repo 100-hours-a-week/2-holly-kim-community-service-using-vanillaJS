@@ -16,8 +16,8 @@ npm start
 
 
 - 회원가입 시 아래는 이미 등록된 정보이므로 다른 정보를 입력해야 한다.  
-이메일 목록: ["hobbit@gmail.com", "user@example.com"]  
-닉네임 목록: ["typicode", "hobbit"]
+이메일 목록: ["user@example.com", "hobbit@gmail.com"]  
+닉네임 목록: ["birdy", "hobbit"]
 
 
 
