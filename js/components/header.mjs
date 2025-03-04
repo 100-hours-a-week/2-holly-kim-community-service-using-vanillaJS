@@ -12,7 +12,7 @@ export function renderHeader() {
         <ul class="dropdown-menu" id="dropdown-menu">
           <li><a href="../users/profile.html" class="edit-profile">회원정보 수정</a></li>
           <li><a href="../users/password.html" class="edit-pw">비밀번호 수정</a></li>
-          <li><a href="../auth/login.html" class="logout">로그아웃</a></li>
+          <li class="logout">로그아웃</li>
         </ul>
       </div>
     </header>
@@ -25,6 +25,12 @@ export function renderHeader() {
   if (backButton) {
       backButton.addEventListener("click", goBack);
   }
+
+  document.querySelector(".logout").addEventListener("click", function() {
+    localStorage.clear(); 
+    alert("로그아웃 되었습니다!");
+    window.location.href = "../auth/login.html"; // 로그인 페이지로 이동 (선택 사항)
+  });
 }
 
 function goBack() {
