@@ -224,8 +224,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-/* 게시글 관련 기능 */
-
 // 게시글 수정 페이지로 이동
 function editPost() {
     const postId = postData.id; // 클릭한 게시글의 ID를 가져옴
@@ -253,6 +251,8 @@ function closeModal() {
 // 게시글 삭제 (확인 버튼 클릭 시)
 async function removePost() {
     await deletePost(postId); 
+    // 게시글 삭제 후 세션 스토리지에서 좋아요 상태 제거
+    sessionStorage.removeItem(`liked_${postId}`);
     setTimeout(() => {
         window.location.replace("/pages/posts/list.html");
     }, 500); 
@@ -278,23 +278,21 @@ async function increaseViewCount(postId, currentViews) {
     }
 }
 
-// 좋아요 토글 함수 (토글: 좋아요/취소)
+// 좋아요 토글 함수 
 async function toggleLike() {
     const likeButton = document.getElementById("like-count");
     if (!likeButton) return;
-
-    console.log("like clicked");
-    // 현재 좋아요 수를 가져옵니다.
+  
     let likeCount = parseInt(likeButton.textContent.match(/\d+/)[0]);
-
+    isLiked = sessionStorage.getItem(`liked_${postId}`) === "true";
     if (isLiked) {
-        // 이미 좋아요한 상태이면 취소: 좋아요 수 감소
+        // 이미 좋아요한 상태이면 취소 
         likeCount--;
         isLiked = false;
         likeButton.classList.remove("liked");
-        likeButton.style.backgroundColor = "#f0f0f0";
+        likeButton.style.backgroundColor = "#f4f5f7";
     } else {
-        // 좋아요하지 않은 상태이면 좋아요: 좋아요 수 증가
+        // 좋아요하지 않은 상태이면 좋아요 수 증가
         likeCount++;
         isLiked = true;
         likeButton.classList.add("liked");

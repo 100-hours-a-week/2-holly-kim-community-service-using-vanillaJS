@@ -1,5 +1,21 @@
 import { renderHeader } from "/js/components/header.mjs";
-import { updatePost, fetchPost} from "../../api/request.mjs";
+import { updatePost, fetchPost } from "../../api/request.mjs";
+
+let imgUrl = "";
+
+// 파일을 base64 data URL로 변환하기
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+         const reader = new FileReader();
+         reader.onload = function(e) {
+              resolve(e.target.result);
+         };
+         reader.onerror = function(e) {
+              reject(e);
+         };
+         reader.readAsDataURL(file);
+    });
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
     renderHeader(); // 공통 헤더 삽입
@@ -9,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const contentInput = document.getElementById("post-content");
     const titleError = document.getElementById("title-error");
     const contentError = document.getElementById("content-error");
+    const fileInput = document.getElementById("picture-upload");
 
     // 게시글 ID를 URL 파라미터에서 가져오기
     const urlParams = new URLSearchParams(window.location.search);
@@ -50,14 +67,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const title = titleInput.value;
             const content = contentInput.value;
-            const updatedData = { title, content };
+
+            // 파일 가져오기
+            const file = fileInput.files[0];
+            if (file) {
+                try {
+                    imgUrl = await readFileAsDataURL(file);
+                } catch (error) {
+                    console.error("이미지 처리 중 에러 발생:", error);
+                }
+            }
+
+            // 업데이트할 데이터를 구성 (imgUrl이 있으면 추가)
+            const updatedData = {
+                title, content,
+                ...(imgUrl ? { imgUrl } : {})
+            };
 
             try {
                 const result = await updatePost(postId, updatedData);
                 if (result) {
                     setTimeout(() => {
                         window.location.replace(`../../pages/posts/detail.html?postId=${postId}`);
-                    }, 500); 
+                    }, 500);
                     alert("게시글 수정 완료");
                 } else {
                     alert("게시글 수정 중 오류가 발생했습니다.");
@@ -78,4 +110,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             dropdown.style.display = "none";
         }
     });
+    fileInput.addEventListener("change", function () {
+        const fileName = this.files.length > 0 ? this.files[0].name : "파일을 선택해주세요.";
+        document.getElementById("picture-upload").textContent = fileName;
+    });
+
 });
