@@ -50,10 +50,8 @@ npm start
 │   ├── pages/         # 개별 페이지 스타일  
 │  
 ├── js/                   
-│   ├── main.js        # 초기 실행 파일  
 │   ├── api/           # API 관련 코드  
-│   │   ├── request.js    # API 요청 함수  
-│   │   ├── endpoints.js  # API 엔드포인트 정리  
+│   │   ├── request.mjs    # API 요청 함수  
 │   │  
 │   ├── components/    # UI 컴포넌트 관련 JS  
 │   │   ├── header.mjs    # 헤더 컴포넌트  
@@ -73,11 +71,10 @@ npm start
 │   │   │   ├── register.js  # 회원가입  
 │  
 ├── assets/            # 정적 파일 (리소스)  
-│   ├── images/        # 이미지 리소스  
-│   ├── fonts/         # 웹 폰트  
+│   ├── images/        # 이미지 리소스   
 │  
-├── data/              # JSON 및 로컬 데이터  
-├── utils/             # 유틸리티 함수 (날짜 변환, 포맷팅 등)  
+├── json-server/       # JSON server  
+|  
 ├── README.md          # 프로젝트 설명 파일  
 
 ```
