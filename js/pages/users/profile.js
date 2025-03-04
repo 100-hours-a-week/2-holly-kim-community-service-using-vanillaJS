@@ -174,6 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".logout").addEventListener("click", function() {
         localStorage.clear(); 
         alert("로그아웃 되었습니다!");
-        window.location.href = "../auth/login.html"; // 로그인 페이지로 이동 (선택 사항)
+        window.location.href = "../auth/login.html";  
       });
 });
