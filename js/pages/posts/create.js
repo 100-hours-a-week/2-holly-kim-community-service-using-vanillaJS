@@ -65,7 +65,7 @@ submitBtn.addEventListener("click", async (event) => {
     const file = fileInput.files[0];
 
     // 기본 이미지 URL (파일이 없을 경우)
-    let imgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Eopsaltria_australis_-_Mogo_Campground.jpg/640px-Eopsaltria_australis_-_Mogo_Campground.jpg";
+    let imgUrl = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
     
     if (file) {
          try { 
