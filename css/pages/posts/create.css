@@ -65,7 +65,9 @@
     background: #F4F5F7;
 }
 
-
+.main{
+    padding-top: 40px;
+}
 body {
     background-color: #F4F5F7;
     text-align: center;
