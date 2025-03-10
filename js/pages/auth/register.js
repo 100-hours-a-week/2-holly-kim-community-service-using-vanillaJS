@@ -1,4 +1,4 @@
-import { registerUser, checkDuplicate } from "../../api/request.mjs";
+import { registerUser, checkDuplicate } from "../../api/request.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const pictureUpload = document.getElementById("picture-upload");

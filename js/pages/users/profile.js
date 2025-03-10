@@ -1,14 +1,14 @@
-import { updateProfile, getProfiles, loginUser } from "../../api/request.mjs";
+import { updateProfile, getProfiles } from "../../api/request.js";
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "../../assets/images/profile.png";
+const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
 
 document.addEventListener("DOMContentLoaded", () => {
     const pictureUpload = document.getElementById("picture-upload");
     const profilePreview = document.getElementById("profile-preview");
     const quitBtn = document.querySelector(".quit");
     const quitModal = document.getElementById("quit-modal");
-    const mainBtn = document.querySelector(".homepage");
+    const mainBtn = document.querySelector(".homepage"); // 제목 클릭하면 글 목록으로 돌아감
     const closeModalBtn = document.querySelector(".reject-btn"); // 모달 닫기 버튼
     const quitConfirmBtn = document.querySelector(".confirm-btn"); // 탈퇴 확정 버튼
     const profileImg = document.querySelector(".profile-img");
@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // json-server의 db.json에서 프로필 데이터를 가져옴
             const profiles = await getProfiles();
             // 입력한 닉네임과 동일한 닉네임이 존재하는지 확인
-            const duplicate = profiles.find((profile) => profile.nickname === nickname);
-            if (duplicate) {
+            const nicknameExists = profiles.find((profile) => profile.nickname === nickname);
+            if (nicknameExists) {
                 errorText.textContent = "*중복된 닉네임입니다.";
                 return false;
             }
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.querySelector(".logout").addEventListener("click", function() {
         localStorage.clear(); 
-        alert("로그아웃 되었습니다!");
+        alert("로그아웃 되었습니다.");
         window.location.href = "../auth/login.html";  
       });
 });

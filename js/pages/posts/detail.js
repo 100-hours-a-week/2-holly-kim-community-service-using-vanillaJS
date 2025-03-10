@@ -1,5 +1,6 @@
-import { renderHeader } from "/js/components/header.mjs";
-import { fetchPost, deletePost } from "../../api/request.mjs";
+import { renderHeader } from "/js/components/header.js";
+import { fetchPost, deletePost } from "../../api/request.js";
+import { BASE_URL } from "../../api/config.js"; 
 
 let postId;
 let postData = null;
@@ -89,7 +90,7 @@ async function addComment() {
     try {
         postData.comments.push(newComment);
 
-        await fetch(`http://localhost:3000/posts/${postId}`, {
+        await fetch(`${BASE_URL}/posts/${postId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ comments: postData.comments })
@@ -142,7 +143,7 @@ async function saveComment(commentId, newText) {
     postData.comments[commentIndex].content = newText;
 
     try {
-        await fetch(`http://localhost:3000/posts/${postId}`, {
+        await fetch(`${BASE_URL}/posts/${postId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ comments: postData.comments })
@@ -161,7 +162,7 @@ async function deleteComment(commentId) {
     postData.comments = postData.comments.filter((c) => c.id !== commentId);
 
     try {
-        await fetch(`http://localhost:3000/posts/${postId}`, {
+        await fetch(`${BASE_URL}/posts/${postId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ comments: postData.comments })
@@ -205,7 +206,7 @@ function initializeLikeButton() {
         likeButton.style.backgroundColor = "#F4F5F7";
     }
 }
-
+  
 // 이벤트 리스너 설정
 document.addEventListener("DOMContentLoaded", async () => {
     await loadPost();
@@ -267,7 +268,7 @@ async function increaseViewCount(postId, currentViews) {
         // 조회수 증가
         const updatedViews = currentViews + 1;
         // 서버에 조회수 업데이트 요청
-        await fetch(`http://localhost:3000/posts/${postId}`, {
+        await fetch(`${BASE_URL}/posts/${postId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ views: updatedViews }),
@@ -302,7 +303,7 @@ async function toggleLike() {
 
     // 서버에 좋아요 수 업데이트 요청
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        const response = await fetch(`${BASE_URL}/posts/${postId}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ likes: likeCount }),
@@ -339,7 +340,7 @@ window.deleteComment = deleteComment;
 
 
 document.addEventListener("click", (event) => {
-    // 좋아요 버튼 클릭 (id="like-count")
+    // 좋아요 버튼 클릭 
     if (event.target.id === "like-count") {
         event.preventDefault();
         toggleLike();

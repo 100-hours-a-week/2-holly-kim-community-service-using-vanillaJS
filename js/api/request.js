@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"; // JSON Server 주소
+import { BASE_URL } from "./config.js"; 
 
 // 게시글 목록 가져오기 (GET)
 export async function fetchPosts() {
@@ -9,27 +9,32 @@ export async function fetchPosts() {
     return posts;
   } catch (error) {
     console.error("게시글 가져오기 실패:", error);
+    alert("게시글 목록을 가져오는 도중 오류가 발생했습니다.");
   }
 }
 
 // 게시글 작성 (POST)
-export async function createPost(email, author, title, content, created_at, likes, comments, views, imgUrl) {
+export async function createPost(postData) {
   try {
     const response = await fetch(`${BASE_URL}/posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, author, title, content, created_at, likes, comments, views, imgUrl }),
+      body: JSON.stringify( postData ),
     }); 
-    post = await response.json();
+    if (!response.ok) {
+      throw new Error(`서버 응답 실패: ${response.status}`);
+    }
+    const post = await response.json();
     console.log(post);
     return post;
   } catch (error) {
     console.error("게시글 작성 실패:", error);
+    alert("게시글 작성 중 오류가 발생했습니다.");
   }
 }
 
 // 게시글 상세보기 (GET)
-export async function fetchPost(id) {
+export async function fetchPost(id) { 
   try {
     const response = await fetch(`${BASE_URL}/posts/${id}`); 
     if (!response.ok) throw new Error("게시글을 찾을 수 없음");
@@ -38,6 +43,7 @@ export async function fetchPost(id) {
     return post;
   } catch (error) {
     console.error("게시글 가져오기 실패:", error);
+    alert("게시글을 가져오는 중 오류가 발생했습니다.");
   }
 }
 
@@ -57,6 +63,7 @@ export async function updatePost(id, updatedData) {
     return updatedPost;
   } catch (error) {
     console.error("게시글 수정 중 오류 발생:", error);
+    alert("게시글 수정 중 오류가 발생했습니다.");
   }
 }
 
@@ -73,6 +80,7 @@ export async function deletePost(id) {
     return true;
   } catch (error) {
     console.error("게시글 삭제 중 오류 발생:", error);
+    alert("게시글 삭제 중 오류가 발생했습니다.");
     return false;
   }
 }
@@ -95,6 +103,7 @@ export async function updatePostLikes(postId, likes) {
         return await response.json(); // 업데이트된 게시글 반환
     } catch (error) {
         console.error("좋아요 업데이트 실패:", error);
+        alert("좋아요 업데이트 중 오류가 발생했습니다.");
     }
 }
 
@@ -106,7 +115,7 @@ export async function getProfiles() {
     return profiles;
   } catch (error) {
     console.error("프로필 가져오기 실패:", error);
-    throw error;
+    alert("프로필 목록을 가져오는 중 오류가 발생했습니다."); 
   }
 }
 
@@ -129,6 +138,7 @@ export async function updateProfile(profileId, profileData) {
     return updatedProfile;
   } catch (error) {
     console.error("프로필 업데이트 실패:", error);
+    alert("프로필 업데이트 중 오류가 발생했습니다.");
     return null;
   }
 }
@@ -152,6 +162,7 @@ export async function updatePassword(profileId, newPassword) {
         return updatedProfile;
     } catch (error) {
         console.error("비밀번호 변경 실패:", error);
+        alert("비밀번호 변경 중 오류가 발생했습니다.");
         return null;
     }
 }
@@ -169,6 +180,7 @@ export async function getProfile(profileId) {
         return profile;
     } catch (error) {
         console.error("프로필 조회 실패:", error);
+        alert("프로필 조회 중 오류가 발생했습니다.");
         return null;
     }
 }
@@ -181,6 +193,7 @@ export async function checkDuplicate(field, value) {
         return data.length > 0; // 중복이 있으면 true, 없으면 false 반환
     } catch (error) {
         console.error("중복 확인 실패:", error);
+        alert("계정정보 중복 확인 중 오류가 발생했습니다.");
         return false;
     }
 }
@@ -221,6 +234,7 @@ export async function registerUser(email, password, nickname, profileImage) {
         return newUser;
     } catch (error) {
         console.error("회원가입 오류:", error);
+        alert("회원가입 중 오류가 발생했습니다.");
         return null;
     }
 }

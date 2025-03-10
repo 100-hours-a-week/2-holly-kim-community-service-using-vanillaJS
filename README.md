@@ -51,10 +51,10 @@ npm start
 │  
 ├── js/                   
 │   ├── api/           # API 관련 코드  
-│   │   ├── request.mjs    # API 요청 함수  
+│   │   ├── request.js    # API 요청 함수  
 │   │  
 │   ├── components/    # UI 컴포넌트 관련 JS  
-│   │   ├── header.mjs    # 헤더 컴포넌트  
+│   │   ├── header.js    # 헤더 컴포넌트  
 │   │  
 │   ├── pages/         # 페이지별 기능  
 │   │   ├── posts/        # 게시글 기능  

@@ -1,4 +1,4 @@
-import { loginUser } from "../../api/request.mjs"; // Import the loginUser function
+import { loginUser } from "../../api/request.js"; 
 
 document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-
-        // Use the loginUser function to get user data
+ 
         const user = await loginUser(email, password);
 
         if (user) {

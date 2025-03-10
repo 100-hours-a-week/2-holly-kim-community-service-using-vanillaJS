@@ -1,7 +1,7 @@
-import { fetchPosts, getProfiles } from "../../api/request.mjs";
+import { fetchPosts, getProfiles } from "../../api/request.js";
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser')); 
-const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "../../assets/images/profile.png";
+const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
 
 
 document.addEventListener("DOMContentLoaded", async () => {

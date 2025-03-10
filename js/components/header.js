@@ -1,12 +1,12 @@
-export function renderHeader() {
+export function renderHeader(backPath = "/pages/posts/list.html") {
   const currentUser = JSON.parse(localStorage.getItem('currentUser')); 
 
-  const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "../../assets/images/profile.png";
+  const profileImage = currentUser && currentUser.profileImage ? currentUser.profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s";
 
   const headerHTML = `
     <header class="header"> 
       <span class="back-button">&lt;</span>
-      <span>아무말 대잔치</span>
+      <span>HahaHive</span>
       <div class="profile-container">
         <img src="${profileImage}" alt="사용자 프로필" class="profile-img" />
         <ul class="dropdown-menu" id="dropdown-menu">
@@ -23,7 +23,9 @@ export function renderHeader() {
 
   const backButton = document.querySelector(".back-button");
   if (backButton) {
-      backButton.addEventListener("click", goBack);
+      backButton.addEventListener("click", () => {
+        window.location.href = backPath;
+    });
   }
 
   document.querySelector(".logout").addEventListener("click", function() {
@@ -31,8 +33,4 @@ export function renderHeader() {
     alert("로그아웃 되었습니다!");
     window.location.href = "../auth/login.html"; 
   });
-}
-
-function goBack() {
-  window.location.href = "/pages/posts/list.html";
-}
+} 

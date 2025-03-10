@@ -1,5 +1,5 @@
-import { renderHeader } from '/js/components/header.mjs';
-import { createPost } from "../../api/request.mjs";
+import { renderHeader } from '/js/components/header.js';
+import { createPost } from "../../api/request.js";
 
 renderHeader();  // 공통 헤더 삽입 
 
@@ -74,9 +74,12 @@ submitBtn.addEventListener("click", async (event) => {
              console.error("이미지 처리 중 에러 발생:", error);
          }
     }
+    const postData = {
+        email, author, title, content, created_at, likes, comments, views, 
+        ...(imgUrl ? { imgUrl } : {})
+    };
 
-    await createPost(email, author, title, content, created_at, likes, comments, views, imgUrl);
-
+    await createPost(postData);
     // 제목이나 내용이 비어있으면 에러 메시지 출력
     if (titleInput.value.trim() === "" || contentInput.value.trim() === "") {
         helperText.classList.remove("hidden");

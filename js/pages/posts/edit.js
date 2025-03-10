@@ -1,5 +1,5 @@
-import { renderHeader } from "/js/components/header.mjs";
-import { updatePost, fetchPost } from "../../api/request.mjs";
+import { renderHeader } from "/js/components/header.js";
+import { updatePost, fetchPost } from "../../api/request.js";
 
 let imgUrl = "";
 
@@ -15,10 +15,14 @@ function readFileAsDataURL(file) {
          };
          reader.readAsDataURL(file);
     });
-}
+} 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    renderHeader(); // 공통 헤더 삽입
+    // 게시글 ID를 URL 파라미터에서 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get("id");
+
+    renderHeader(`detail.html?postId=${postId}`); // 공통 헤더 삽입
 
     const updateBtn = document.getElementById("update-btn");
     const titleInput = document.getElementById("title");
@@ -26,10 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const titleError = document.getElementById("title-error");
     const contentError = document.getElementById("content-error");
     const fileInput = document.getElementById("picture-upload");
-
-    // 게시글 ID를 URL 파라미터에서 가져오기
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get("id");
 
     if (postId) {
         try {
