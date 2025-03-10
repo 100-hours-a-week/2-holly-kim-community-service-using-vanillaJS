@@ -6,7 +6,7 @@ export function renderHeader(backPath = "/pages/posts/list.html") {
   const headerHTML = `
     <header class="header"> 
       <span class="back-button">&lt;</span>
-      <span>HahaHive</span>
+      <span>질문 게시판</span>
       <div class="profile-container">
         <img src="${profileImage}" alt="사용자 프로필" class="profile-img" />
         <ul class="dropdown-menu" id="dropdown-menu">

@@ -15,9 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdown = document.getElementById("dropdown-menu");
     const updateBtn = document.getElementById("update-btn");
     const currentImg=document.getElementById("current-img");
+    const email = document.getElementById("email");
 
     profileImg.src = profileImage;
     currentImg.src=currentUser.profileImage; 
+    email.textContent = currentUser.email;
 
     let nickname = "";
     let profileImageData = ""; // 파일 업로드로 읽은 이미지 데이터를 저장

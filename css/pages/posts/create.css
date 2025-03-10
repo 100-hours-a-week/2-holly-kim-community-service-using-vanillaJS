@@ -125,7 +125,7 @@ input{
 }
 
 input:hover {
-    border: 1px solid #aca0eb;
+    border: 1px solid #d2a21f;
 }
 
 textarea{
@@ -139,7 +139,7 @@ textarea{
 }
 .helper-text {
     font-size: 12px;
-    color: red;
+    color: rgb(251, 130, 130);;
     margin-top: 4px;
     height: 16px;
     text-align: left;
@@ -148,7 +148,7 @@ textarea{
 button {
     margin: 10px;
     border-radius: 5px;
-    background-color: #aca0eb;
+    background-color: #d2a21f;
     width: 360px;
     height: 35px;
     color: white;
@@ -163,5 +163,5 @@ button:disabled {
 }
 
 button:hover:not(:disabled) {
-    background-color: #8a80d3;
+    background-color: #bb9217;
 }

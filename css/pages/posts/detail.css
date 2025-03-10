@@ -93,7 +93,7 @@ body {
 }
 
 .comment-submit {
-    background-color: #aca0eb;
+    background-color: #c9a542;
     cursor: not-allowed;
     width: 130px; 
     color: white;
@@ -107,7 +107,7 @@ body {
 }
 
 .comment-submit.active {
-    background: #7f6aee;
+    background: #bb9217;
     cursor: pointer;
 }
 
@@ -166,6 +166,7 @@ body {
     border-radius: 5px;
     resize: none;
 }
+ 
 
 .comment-list {
     list-style: none;

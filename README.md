@@ -12,12 +12,13 @@ npm start
 로그인 화면에서 시작하면 된다.  
 - 로그인 사용자 mock data는 다음과 같고 이 계정정보 중 하나로 로그인하면 된다.  
         { email: "user@example.com", password: "NewSecureP@ssword1" },  
-        { email: "hobbit@gmail.com", password: "aA1!1111" },   
+        { email: "hobbit@gmail.com", password: "aA1!1111" },  
+        { email: "kim@naver.com", password: "aA1!1111" }  
 
 
 - 회원가입 시 아래는 이미 등록된 정보이므로 다른 정보를 입력해야 한다.  
-이메일 목록: ["user@example.com", "hobbit@gmail.com"]  
-닉네임 목록: ["birdy", "hobbit"]
+이메일 목록: ["user@example.com", "hobbit@gmail.com", "kim@naver.com"]  
+닉네임 목록: ["birdy", "hobbit", "조교1"]
 
 
 

@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateLoginButtonState() {
         const isValid = emailValid && passwordValid;
         loginBtn.disabled = !isValid;
-        loginBtn.style.backgroundColor = isValid ? "#7f6aee" : "#aca0eb";
+        loginBtn.style.backgroundColor = isValid ? "#bb9217" : "#d2a21f";
     }
 
     // 로그인 검증

@@ -6,6 +6,11 @@ let postId;
 let postData = null;
 let isLiked = false; // 초기 좋아요 상태
 
+// 줄바꿈을 <br> 태그로 변환하는 함수
+function formatContent(content) {
+    return content.replace(/\n/g, "<br>"); // \n을 <br>로 변환
+}
+
 async function loadPost() {
     postId = new URLSearchParams(window.location.search).get("postId");
     if (!postId) {
@@ -28,9 +33,11 @@ async function loadPost() {
             .toISOString()
             .slice(0, 19)
             .replace("T", " ");
-        document.querySelector(".post-content p").textContent = postData.content;
-        document.querySelector(".figure").src = postData.imgUrl;
-
+        // document.querySelector(".post-content p").textContent = postData.content;
+        document.querySelector(".post-content").innerHTML = formatContent(postData.content); 
+        if (postData.imgUrl){
+            document.querySelector(".figure").src = postData.imgUrl;
+        }
         // 통계 업데이트
         document.getElementById("like-count").innerHTML = `${postData.likes} <br> 좋아요`;
         document.getElementById("view-count").innerHTML = `${postData.views} <br> 조회수`;
@@ -199,7 +206,7 @@ function initializeLikeButton() {
     if (sessionStorage.getItem(`liked_${postId}`) === "true") {
         isLiked = true;
         likeButton.classList.add("liked");
-        likeButton.style.backgroundColor = "#aca0eb";
+        likeButton.style.backgroundColor = "#d2a21f";
     } else {
         isLiked = false;
         likeButton.classList.remove("liked");
@@ -292,13 +299,13 @@ async function toggleLike() {
         likeCount--;
         isLiked = false;
         likeButton.classList.remove("liked");
-        likeButton.style.backgroundColor = "#f4f5f7";
+        likeButton.style.backgroundColor = "#474c55";
     } else {
         // 좋아요하지 않은 상태이면 좋아요 수 증가
         likeCount++;
         isLiked = true;
         likeButton.classList.add("liked");
-        likeButton.style.backgroundColor = "#aca0eb";
+        likeButton.style.backgroundColor = "#d2a21f";
     }
 
     // 서버에 좋아요 수 업데이트 요청

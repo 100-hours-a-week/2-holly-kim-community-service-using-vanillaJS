@@ -71,7 +71,7 @@ body {
 }
 
 button {
-    background-color: #aca0eb;
+    background-color: #d2a21f;
     width: 150px;
     color: white;
     padding: 10px 20px;
@@ -84,11 +84,11 @@ button {
 }
 
 button:hover {
-    background-color: #7f6aee;
+    background-color: #bb9217;
 }
 
 .post {
-    background: #fff;
+    background-color: #c2af1d49;
     border: none;
     padding: 15px;
     margin-top: 10px;
