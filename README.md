@@ -71,9 +71,6 @@ npm start
 │   │   │   ├── login.js     # 로그인  
 │   │   │   ├── register.js  # 회원가입  
 │  
-├── assets/            # 정적 파일 (리소스)  
-│   ├── images/        # 이미지 리소스   
-│  
 ├── json-server/       # JSON server  
 |  
 ├── README.md          # 프로젝트 설명 파일  
