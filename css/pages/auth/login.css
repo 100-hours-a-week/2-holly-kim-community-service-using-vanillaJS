@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 *{
-    background-color: #F4F5F7;
+    background-color: white;
     font-family: "IBM Plex Sans KR", serif;
 }
 .header{
@@ -20,6 +20,9 @@
 .login{
     text-align: center;
     font-size: 24px;
+}
+#login-btn:disabled{
+    background-color: #e9d8a7;
 }
 .input-group{
     margin:10px auto;

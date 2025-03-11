@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let emailValid = false;
     let passwordValid = false;
+    let isValid = false;
 
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,9 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateLoginButtonState() {
-        const isValid = emailValid && passwordValid;
+        isValid = emailValid && passwordValid;
         loginBtn.disabled = !isValid;
-        loginBtn.style.backgroundColor = isValid ? "#bb9217" : "#d2a21f";
+        loginBtn.style.backgroundColor = isValid ? "#bb9217" : "#e9d8a7";
     }
 
     // 로그인 검증

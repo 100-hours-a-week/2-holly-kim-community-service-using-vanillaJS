@@ -9,7 +9,7 @@
 }
 
 .header {
-    background-color: #F4F5F7;
+    background-color: white;
     border-bottom: 1px solid gray;
     font-size: 32px;
     text-align: center;
@@ -62,14 +62,14 @@
 }
 
 .dropdown-menu li:hover {
-    background: #F4F5F7;
+    background: white;
 }
 
 .main{
     padding-top: 40px;
 }
 body {
-    background-color: #F4F5F7;
+    background-color: white;
     text-align: center;
 }
 
@@ -89,7 +89,7 @@ label {
 .custom-file {
     display: flex;
     align-items: center;
-    background-color: #F4F5F7;
+    background-color: white;
     padding: 8px;
     border-radius: 3px;
     box-sizing: border-box;
@@ -116,7 +116,7 @@ input[type="file"] {
 }
 
 input{
-    background-color: #F4F5F7;
+    background-color: white;
     width: 100%;
     padding: 8px;
     border: 1px solid gray;
@@ -130,7 +130,7 @@ input:hover {
 
 textarea{
     height: 300px;
-    background-color: #F4F5F7;
+    background-color: white;
     width: 100%;
     padding: 8px;
     border: 1px solid gray;
